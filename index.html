@@ -4,121 +4,359 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
+    <!-- Google Fonts: IBM Plex Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
-    <title>Your Name</title>
+    <title>Nguyen Thanh Do - Homepage</title>
     <style>
-        img {
-            border-radius: 50%;
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
+        :root {
+            /* FONT CONFIGURATION */
+            --pico-font-family: "IBM Plex Mono", "Menlo", "Consolas", monospace;
+            --pico-font-size: 14px; /* Slightly smaller for mono fonts to look refined */
+            --pico-line-height: 1.6;
+            
+            /* LAYOUT */
+            --pico-block-spacing-vertical: 1.5rem;
+            --pico-h2-margin-bottom: 0.75rem;
+            --avatar-size: 110px;
+
+            /* MONOCHROME BASE COLORS */
+            --pico-primary: #333;
+            --pico-primary-hover: #000;
+            --pico-primary-inverse: #fff;
+            
+            /* VIBRANT LINK COLOR (Light Mode) */
+            --link-color: #4f46e5; /* Indigo-600 */
+            --link-hover: #3730a3; /* Indigo-800 */
+        }
+
+        @media only screen and (prefers-color-scheme: dark) {
+            :root:not([data-theme]) {
+                --pico-primary: #e5e5e5;
+                --pico-primary-hover: #fff;
+                --pico-primary-inverse: #000;
+                
+                /* VIBRANT LINK COLOR (Dark Mode) */
+                --link-color: #38bdf8; /* Sky-400 - looks like code syntax highlight */
+                --link-hover: #7dd3fc; /* Sky-300 */
+            }
+        }
+
+        body {
+            max-width: 900px;
+            margin: 2rem auto; 
+            padding: 0 1.5rem;
+            /* Using weight 400 for better readability with this specific font */
+            font-weight: 400; 
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            border-bottom: 1px dashed var(--pico-muted-border-color); /* Dashed looks more "code-like" */
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .header-content {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        header h1 {
+            margin-bottom: 0.25rem;
+            font-size: 2rem;
+            line-height: 1.1;
+            color: var(--pico-color);
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        header .subtitle {
+            color: var(--pico-muted-color);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* ICON LINKS */
+        .icon-links {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+        }
+
+        .icon-links a {
+            color: var(--pico-muted-color);
+            text-decoration: none;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .icon-links a:hover { 
+            color: var(--link-color);
+            transform: translateY(-2px);
+        }
+
+        .icon-links svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* LAYOUT */
+        .cv-layout { display: block; }
+        section { margin-bottom: 3rem; }
+        
+        h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--pico-muted-color);
+            border-bottom: 1px solid var(--pico-muted-border-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        p { 
+            margin-bottom: 0.75rem; 
+            text-align: justify; 
+            font-weight: 300; /* Lighter weight for paragraph text looks cleaner in mono */
+        }
+
+        /* GLOBAL LINK STYLING */
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 4px;
+        }
+
+        /* SPECIFIC ITEM BLOCKS */
+        .item-block { margin-bottom: 2rem; }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 0.3rem;
         }
         
-        header {
-            text-align: center;
+        .item-date {
+            font-size: 0.85rem;
+            color: var(--pico-muted-color);
+            margin-left: 1rem;
+            white-space: nowrap;
+            font-family: var(--pico-font-family);
+        }
+
+        /* Education */
+        .edu-school { 
+            font-style: normal; 
+            color: var(--pico-color); 
+        }
+
+        /* Publications */
+        .venue-badge {
+            display: inline-block;
+            background-color: var(--pico-muted-border-color); /* Muted background */
+            color: var(--pico-color);
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-weight: 600;
+            vertical-align: middle;
+            margin-right: 8px;
+            border: 1px solid transparent;
+        }
+        
+        /* Make badge outlined in dark mode for better contrast */
+        @media only screen and (prefers-color-scheme: dark) {
+            .venue-badge {
+                background-color: transparent;
+                border: 1px solid var(--pico-muted-border-color);
+                color: var(--pico-muted-color);
+            }
+        }
+        
+        .pub-title { 
+            font-weight: 600; 
+            color: var(--link-color); 
+        }
+        
+        .authors { 
+            font-size: 0.9rem; 
+            color: var(--pico-muted-color); 
+            margin-top: 4px; 
+            font-weight: 300;
+        }
+        
+        /* Highlight self in authors */
+        .authors strong {
+            font-weight: 600;
+            color: var(--pico-color);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            header { 
+                flex-direction: column; 
+                text-align: center; 
+                gap: 1rem; 
+            }
+            .header-content { text-align: center; }
+            .icon-links { justify-content: center; }
+            .item-header { flex-direction: column; }
+            .item-date { 
+                margin-left: 0; 
+                margin-bottom: 0.25rem; 
+                opacity: 0.8;
+            }
         }
     </style>
 </head>
 <body>
-    <main>
-        <header>
-            <h1>Hi there, I'm Your Name 👋</h1>
-            <img src="profile.jpg" alt="Your Name">
-            <p>Deep Learning & Systems Programming</p>
-        </header>
 
-        <section>
-            <h2>Education</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Degree</th>
-                        <th>Institution</th>
-                        <th>Year</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Ph.D. in Computer Science</td>
-                        <td>University Name</td>
-                        <td>2020 - 2024</td>
-                    </tr>
-                    <tr>
-                        <td>M.S. in Computer Science</td>
-                        <td>University Name</td>
-                        <td>2018 - 2020</td>
-                    </tr>
-                    <tr>
-                        <td>B.S. in Computer Science</td>
-                        <td>University Name</td>
-                        <td>2014 - 2018</td>
-                    </tr>
-                </tbody>
-            </table>
+    <header>
+        <div class="header-content">
+            <h1>Nguyen Thanh Do</h1>
+            <div class="subtitle"></div>
+            
+            <div class="icon-links">
+                <!-- Email -->
+                <a href="mailto:nguyenthanhdo.contact@gmail.com" aria-label="Email">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                </a>
+                <!-- GitHub -->
+                <a href="https://github.com/staticpunch" target="_blank" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com/in/nguyenthanhdo-atwork" target="_blank" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="cv-layout">
+        <article>
+            
+         <section>
+            <h2>About</h2>
+            <p>
+                Hello, my name is Nguyen Thanh Do (Nguyễn Thành Đô). I am an incoming Ph.D. student at the College of Computing and Data Science (CCDS), Nanyang Technological University (NTU), starting in Spring 2026 under the supervision of <a href="https://d12306.github.io/index.html" target="_blank" rel="noopener noreferrer">Prof. Sean Du</a>. I received my Bachelor's degree in Information Technology from VNU - University of Engineering and Technology, where I was fortunate to work closely with <a href="https://uet.vnu.edu.vn/~hieupx/index.html" target="_blank" rel="noopener noreferrer">Professor Phan Xuan Hieu</a> and <a href="https://scholar.google.com.vn/citations?user=YMCJQ8UAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Dr. Vuong Thi Hai Yen</a>.
+            </p>
+            <p>
+                Prior to pursuing graduate studies, I spent three years conducting NLP research and developing applications at Viettel AI. During this time, I worked under the guidance of <a href="https://scholar.google.com/citations?user=hrsoOCcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Dr. Bui Khac Hoai Nam</a>, with whom I had productive research collaborations that deepened my passion for research.
+            </p>
+            <p>
+                My current research interests focus on reliable foundation models and their applications, specifically mitigating malicious behavior and understanding hallucination in large language models and multimodal models. Besides research, I am passionate about low-level programming and eager to deepen my understanding of how ML systems work in practice.
+            </p>
         </section>
 
-        <section>
-            <h2>Work Experience</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Position</th>
-                        <th>Company</th>
-                        <th>Period</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Research Scientist</td>
-                        <td>Company/Institution Name</td>
-                        <td>2024 - Present</td>
-                    </tr>
-                    <tr>
-                        <td>Research Intern</td>
-                        <td>Company Name</td>
-                        <td>Summer 2023</td>
-                    </tr>
-                    <tr>
-                        <td>Software Engineer</td>
-                        <td>Company Name</td>
-                        <td>2020 - 2022</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+            <section>
+                <h2>Education</h2>
+                <div class="item-block">
+                    <div class="item-header">
+                        <h3>Ph.D. in Computer Science</h3>
+                        <span class="item-date">Jan. 2026</span>
+                    </div>
+                    <div class="edu-school">Nanyang Technological University, Singapore</div>
+                </div>
+                <div class="item-block">
+                    <div class="item-header">
+                        <h3>B.Sc in Information Technology</h3>
+                        <span class="item-date">2019 – 2023</span>
+                    </div>
+                    <div class="edu-school">VNU University of Engineering and Technology, Hanoi</div>
+                </div>
+            </section>
 
-        <section>
-            <h2>Publications</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Venue</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Paper Title: A Novel Approach to Deep Learning Systems</strong><br>
-                            <small>Author 1, <strong>Your Name</strong>, Author 3</small></td>
-                        <td>Conference Name 2024</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Another Paper Title: Efficient Systems for Machine Learning</strong><br>
-                            <small><strong>Your Name</strong>, Co-author 1, Co-author 2</small></td>
-                        <td>Journal Name, Vol. X, 2023</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Third Paper: Scalable Deep Learning Infrastructure</strong><br>
-                            <small>Co-author, <strong>Your Name</strong></small></td>
-                        <td>Workshop at Conference 2023</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+            <section>
+                <h2>Publications</h2>
 
-        <footer>
-            <p><small>© 2024 Your Name</small></p>
-        </footer>
+                <div class="item-block">
+                    <span class="venue-badge">ACL 2025</span>
+                    <a href="https://aclanthology.org/2025.findings-acl.274.pdf" target="_blank" class="pub-title">ClaimPKG: Enhancing Claim Verification via Pseudo-Subgraph Generation with Lightweight Specialized LLM</a>
+                    <div class="authors">Pham, V.H*., <strong>Nguyen, T.D*.</strong>, Bui, K.H.N.</div>
+                </div>
+
+                
+                <div class="item-block">
+                    <span class="venue-badge">NAACL 2024</span>
+                    <a href="https://openreview.net/forum?id=xriAx36DH9" target="_blank" class="pub-title">Verify-in-the-Graph: Entity Disambiguation Enhancement for Complex Claim Verification with Interactive Graph Representation</a>
+                    <div class="authors">Pham, V.H., <strong>Nguyen, T.D.</strong>, Bui, K.H.N.</div>
+                </div>
+
+                <div class="item-block">
+                    <span class="venue-badge">CoNLL 2024</span>
+                    <a href="https://aclanthology.org/2024.conll-1.pdf" target="_blank" class="pub-title">A Novel Instruction Tuning Method for Vietnamese Math Reasoning using Trainable Open-Source Large Language Models</a>
+                    <div class="authors"><strong>Nguyen, T.D*.</strong>, Nguyen, Q.V*., Bui, K.H.N., Nguyen, V.V.</div>
+                </div>
+
+                <div class="item-block">
+                    <span class="venue-badge">PACLIC 2023</span>
+                    <a href="https://aclanthology.org/2023.paclic-1.59/" target="_blank" class="pub-title">Passage-based BM25 Hard Negatives: A Simple and Effective Negative Sampling Strategy For Dense Retrieval</a>
+                    <div class="authors"><strong>Nguyen, T.D.</strong>, Bui, C.M., Vuong, T.H.Y., Phan, X.H.</div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Work Experience</h2>
+                <div class="item-block">
+                    <div class="item-header">
+                        <h3>Research Assistant in Artificial Intelligence</h3>
+                        <span class="item-date">Fulbright Uni, HCMC | Sep. 2025 – Jan. 2026</span>
+                    </div>
+                    <p>
+                        Doing research in the intersection of Artificial Intelligence and Computational Biology, exploring how LLMs can help accelerate progress in biology research. 
+                    </p>
+                </div>
+                <div class="item-block">
+                    <div class="item-header">
+                        <h3>Artificial Intelligence Researcher</h3>
+                        <span class="item-date">Viettel AI, Hanoi | Nov. 2022 – Sep. 2025</span>
+                    </div>
+                    <p>
+                        Conducting applied research in semantic search, mathematical reasoning with LLMs, model merging techniques, and agentic frameworks. 
+                        Contributing significantly to the development of multiple Vietnamese language models (upto 70B parameters). Building retrieval-augmented generation (RAG) applications for in-house services, incorporating document search and answer generation/extraction
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Projects</h2>
+                <div class="item-block">
+                    <div class="item-header">
+                        <a href="https://github.com/staticpunch/flash-attn" target="_blank" class="pub-title">Flash Attention in Triton</a>
+                    </div>
+                    <p>
+                        This repo implements forward pass of Flash Attention-2 paper, which computes attention by tiles and avoids ever explicitly materializing full attention score matrices, enabling scaling to much longer sequence lengths.
+                    </p>
+                </div>
+
+            </section>
+
+        </article>
     </main>
 </body>
 </html>
